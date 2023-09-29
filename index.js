@@ -100,14 +100,20 @@ async function run() {
       if (arch != 'x86' && arch != 'x86_64') {
         core.setFailed('"arch" may only be x86 or x86_64');
       }
+      // https://gstreamer.freedesktop.org/data/pkg/windows/1.22.6/mingw/gstreamer-1.0-mingw-x86_64-1.22.6.msi
+      // const installers = [
+      //   `gstreamer-1.0-msvc-${arch}-${version}.msi`,
+      //   `gstreamer-1.0-devel-msvc-${arch}-${version}.msi`
+      // ];
 
       const installers = [
-        `gstreamer-1.0-msvc-${arch}-${version}.msi`,
-        `gstreamer-1.0-devel-msvc-${arch}-${version}.msi`
+        `gstreamer-1.0-mingw-${arch}-${version}.msi`,
+        `gstreamer-1.0-devel-mingw-${arch}-${version}.msi`
       ];
-      
+
       for (const installer of installers) {
-        const url = `${baseUrl}/windows/${version}/msvc/${installer}`;
+        // const url = `${baseUrl}/windows/${version}/msvc/${installer}`;
+        const url = `${baseUrl}/windows/${version}/mingw/${installer}`;
 
         core.info(`Downloading: ${url}`);
         const installerPath = await tc.downloadTool(url, installer);
@@ -121,11 +127,13 @@ async function run() {
         }
       }
 
-      gstreamerPath = `c:\\gstreamer\\1.0\\msvc_${arch}`;
+      // gstreamerPath = `c:\\gstreamer\\1.0\\msvc_${arch}`;
+      gstreamerPath = `c:\\gstreamer\\1.0\\mingw_${arch}`;
       gstreamerBinPath = `${gstreamerPath}\\bin`;
 
       // Set the GSTREAMER_1_0_ROOT_MSVC_<arch> variable
-      let gst_root_varname = 'GSTREAMER_1_0_ROOT_MSVC_' + arch.toUpperCase();
+      // let gst_root_varname = 'GSTREAMER_1_0_ROOT_MSVC_' + arch.toUpperCase();
+      let gst_root_varname = 'GSTREAMER_1_0_ROOT_MINGw_' + arch.toUpperCase();
       core.info(`Setting environment variable: ${gst_root_varname}`);
       core.exportVariable(gst_root_varname, gstreamerPath);
     }
