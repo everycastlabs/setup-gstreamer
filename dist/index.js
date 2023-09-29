@@ -67382,7 +67382,7 @@ async function run() {
 
       // Set the GSTREAMER_1_0_ROOT_MSVC_<arch> variable
       // let gst_root_varname = 'GSTREAMER_1_0_ROOT_MSVC_' + arch.toUpperCase();
-      let gst_root_varname = 'GSTREAMER_1_0_ROOT_MINGw_' + arch.toUpperCase();
+      let gst_root_varname = 'GSTREAMER_1_0_ROOT_MINGW_' + arch.toUpperCase();
       core.info(`Setting environment variable: ${gst_root_varname}`);
       core.exportVariable(gst_root_varname, gstreamerPath);
     }
